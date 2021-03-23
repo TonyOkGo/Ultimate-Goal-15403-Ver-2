@@ -62,8 +62,7 @@ public class FirstSemesterTeleop extends LinearOpMode {
         double CurTime = elapTime;
         double LastTime = elapTime;
 
-        final int SERVO_CLOSED  = 359;
-        final int SERVO_OPEN    = 60;
+
 
         double mPow = 0;
 
@@ -110,13 +109,25 @@ public class FirstSemesterTeleop extends LinearOpMode {
                 power = 0;
             }
 
-            robot.shooterMotor.setPower(power);
-            mPow = gamepad2.left_stick_y/2;
-           // robot.wobbleGrabMotor.setPower(mPow);
-           /* if(gamepad2.a) {
-                robot.wobbleGrabServo.setPosition(SERVO_CLOSED); }
+            robot.shooterMotor.setPower(power*.95);
+            mPow = gamepad2.left_stick_y/3;
+           robot.wobbleGrabMotor.setPower(-mPow);
             if(gamepad2.b) {
-                robot.wobbleGrabServo.setPosition(SERVO_OPEN); }*/
+                robot.wobbleGrabServo.setPower(1);
+            }
+            else{
+                robot.wobbleGrabServo.setPower(0);
+
+            }
+            if(gamepad2.a) {
+                robot.wobbleGrabServo.setPower(-1);
+            }
+            else{
+                robot.wobbleGrabServo.setPower(0);
+
+            }
+
+
             //IntakeSpeed=-gamepad2.right_stick_y;
            /* if (gamepad2.b){
                 robot.intakeMotor.setPower(1);
@@ -134,7 +145,33 @@ public class FirstSemesterTeleop extends LinearOpMode {
             robot.pastaMotor.setPower(-IntakeSpeed);
             robot.pastaServo.setPower(IntakeSpeed*2);
             robot.pastaServo2.setPower(-IntakeSpeed*2);
+
+            if(gamepad2.x) {
+                robot.pastaServo.setPower(1);
+                robot.pastaServo2.setPower(-1);
+                robot.pastaMotor.setPower(1);
+            }
+            else{
+                robot.pastaServo.setPower(0);
+                robot.pastaServo2.setPower(0);
+                robot.pastaMotor.setPower(0);
+            }
+            if (gamepad2.y) {
+                robot.pastaServo.setPower(-1);
+                robot.pastaServo2.setPower(1);
+                robot.pastaMotor.setPower(1);
+
+
+            }
+            else {
+                robot.pastaServo.setPower(0);
+                robot.pastaServo2.setPower(0);
+                robot.pastaMotor.setPower(0);
+
+
+            }
         }
+
 
     }
 }
