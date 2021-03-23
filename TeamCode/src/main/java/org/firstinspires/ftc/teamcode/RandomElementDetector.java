@@ -39,7 +39,7 @@ public class RandomElementDetector extends LinearOpMode {
     public int RandomElementNumber() {
         //Enable for use of external webcam
         cameraManager = ClassFactory.getInstance().getCameraManager();
-        cameraName = hardwareMap.get(WebcamName.class, "webcam");
+        cameraName = hardwareMap.get(WebcamName.class, "Webcam 1");
 
         initVuforia();
         initTfod();
