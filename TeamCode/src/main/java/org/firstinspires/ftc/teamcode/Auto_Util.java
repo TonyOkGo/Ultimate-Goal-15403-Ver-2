@@ -26,6 +26,12 @@ import java.util.List;
 
 @TeleOp(name="Auto_Util", group="abstract")
 @Disabled
+/*
+left front motor = 0
+left back motor = 1
+right back motor = 2
+right front motor = 3
+ */
 public abstract class Auto_Util extends LinearOpMode{
     static final double COUNTS_PER_MOTOR_REV = 1120;    // eg: TETRIX Motor Encoder
     static final double DRIVE_GEAR_REDUCTION = 1;     // This is < 1.0 if geared UP
@@ -43,7 +49,7 @@ public abstract class Auto_Util extends LinearOpMode{
     //servos
     CRServo servo1;
     CRServo crservo1, crservo2;
-    private ElapsedTime runtime = new ElapsedTime();
+    ElapsedTime runtime = new ElapsedTime();
     BNO055IMU imu;
     //Hardware Map Names for drive motors and odometry wheels. THIS WILL CHANGE ON EACH ROBOT, YOU NEED TO UPDATE THESE VALUES ACCORDINGLY
     String rfName = "rfD", rbName = "rbD", lfName = "lfD", lbName = "lbD";
@@ -126,10 +132,10 @@ public abstract class Auto_Util extends LinearOpMode{
         lfmotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lbmotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        rfmotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rbmotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        lfmotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        lbmotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rfmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rbmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        lfmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        lbmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         lbmotor.setDirection(DcMotor.Direction.REVERSE);
         lfmotor.setDirection(DcMotor.Direction.REVERSE);
@@ -165,10 +171,10 @@ public abstract class Auto_Util extends LinearOpMode{
         utilmotor3.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         utilmotor4.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        utilmotor1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        utilmotor2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        utilmotor3.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        utilmotor4.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        utilmotor1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        utilmotor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        utilmotor3.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        utilmotor4.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         utilmotor1.setDirection(DcMotor.Direction.FORWARD);
         utilmotor2.setDirection(DcMotor.Direction.FORWARD);
@@ -424,6 +430,8 @@ public abstract class Auto_Util extends LinearOpMode{
             rfmotor.setPower(1); rbmotor.setPower(-1);
             lfmotor.setPower(-1); lbmotor.setPower(1);
         }
+        rfmotor.setPower(0); rbmotor.setPower(0);
+        lfmotor.setPower(0); lbmotor.setPower(0);
     }
     public void strafeRight(double time){
         runtime.reset();
@@ -431,6 +439,8 @@ public abstract class Auto_Util extends LinearOpMode{
             rfmotor.setPower(-1); rbmotor.setPower(1);
             lfmotor.setPower(1); lbmotor.setPower(-1);
         }
+        rfmotor.setPower(0); rbmotor.setPower(0);
+        lfmotor.setPower(0); lbmotor.setPower(0);
     }
     public void turnRight(double time){
         runtime.reset();
@@ -438,6 +448,8 @@ public abstract class Auto_Util extends LinearOpMode{
             rfmotor.setPower(-1); rbmotor.setPower(-1);
             lfmotor.setPower(1); lbmotor.setPower(1);
         }
+        rfmotor.setPower(0); rbmotor.setPower(0);
+        lfmotor.setPower(0); lbmotor.setPower(0);
     }
     public void turnLeft(double time){
         runtime.reset();
@@ -445,6 +457,8 @@ public abstract class Auto_Util extends LinearOpMode{
             rfmotor.setPower(1); rbmotor.setPower(1);
             lfmotor.setPower(-1); lbmotor.setPower(-1);
         }
+        rfmotor.setPower(0); rbmotor.setPower(0);
+        lfmotor.setPower(0); lbmotor.setPower(0);
     }
     public int ub_vision(){
         cameraManager = ClassFactory.getInstance().getCameraManager();
