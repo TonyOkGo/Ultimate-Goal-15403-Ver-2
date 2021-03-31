@@ -53,9 +53,9 @@ public abstract class Auto_Util extends LinearOpMode{
     OdometryGlobalCoordinatePosition globalPositionUpdate;
     final double ODOMETRY_COUNTS_PER_INCH = 307.699557;
     //Vision Stuff
-    CameraManager cameraManager;
-    WebcamName cameraName;
-    Camera camera;
+    private CameraManager cameraManager;
+    private WebcamName cameraName;
+    private Camera camera;
     //Variables for Camera
     private static final String TAG = "Webcam Sample";
     private static final int secondsPermissionTimeout = Integer.MAX_VALUE;
@@ -446,7 +446,7 @@ public abstract class Auto_Util extends LinearOpMode{
             lfmotor.setPower(-1); lbmotor.setPower(-1);
         }
     }
-    public int ub_vision(){
+    public int ub_vision() {
         cameraManager = ClassFactory.getInstance().getCameraManager();
         cameraName = hardwareMap.get(WebcamName.class, "Webcam 1");
 
