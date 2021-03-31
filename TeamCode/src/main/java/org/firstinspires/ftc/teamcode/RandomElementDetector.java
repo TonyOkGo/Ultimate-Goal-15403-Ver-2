@@ -21,7 +21,7 @@ public class RandomElementDetector extends LinearOpMode {
     private static final String LABEL_FIRST_ELEMENT = "Quad";
     private static final String LABEL_SECOND_ELEMENT = "Single";
 
-    private static int stackSize = 0;
+    private static int stackSize;
 
     private static final String VUFORIA_KEY =
             "ASr8vlr/////AAABmQLvbOpFkkU9uYwJWNx5o2Antqe3VGKoedUKq3jObB/CKqlUQVEt/vJFkLrOinRFu+wKPJJx1LZe8vYwTUNhYX0/ygb2Oukz3sgnh3k0TMAWBL0gJXnlaw2JzGzwXMy7kL4K1EUdIoWKJgyMSDkWDeNa9JXMelIkU0mgPhQ1PpSqfDiFWcIpalRHVDMF+lR7wR67jJjt7sUWe3TPc2RoUZI9Ratv22wKzXGZTWUEHcvPIkJRyZjjXzzWper4e7gVhJBLEtZA/0U5Nqlasyl0A39AzatrIkCAa16P3J8Z0KKtza1YSKZRYc/Sz022CaSqCtgtG1jq5oK14I2JjQZIufdNLNc9uaXz3qN08jRaxujJ";
@@ -32,8 +32,6 @@ public class RandomElementDetector extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         //PUT IN EXECUTED CLASS
         initCamera();
-        stackSize = 0;
-
 
         waitForStart();
         while(opModeIsActive()) {
@@ -63,6 +61,7 @@ public class RandomElementDetector extends LinearOpMode {
     private void initCamera() {
         initVuforia();
         initTfod();
+        stackSize = 0;
         if(tfod != null) {
             tfod.activate();
             tfod.setZoom(1.0, 16.0 / 9.0);
@@ -73,21 +72,14 @@ public class RandomElementDetector extends LinearOpMode {
      * Initialize the Vuforia localization engine.
      */
     private void initVuforia() {
-        /*
-         * Configure Vuforia by creating a Parameter object, and passing it to the Vuforia engine.
-         */
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
-
         parameters.vuforiaLicenseKey = VUFORIA_KEY;
 
         //SWITCH FOR MIGRATING BETWEEN SMARTPHONE AND WEBCAM
         //parameters.cameraName = hardwareMap.get(WebcamName.class, "Webcam 1");
         parameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
 
-        //  Instantiate the Vuforia engine
         vuforia = ClassFactory.getInstance().createVuforia(parameters);
-
-        // Loading trackables is not necessary for the TensorFlow Object Detection engine.
     }
 
     /**
