@@ -38,8 +38,8 @@ public abstract class Auto_Util extends LinearOpMode{
     static final double WHEEL_DIAMETER_INCHES = 4.0;     // For figuring circumference
     static final double ENCODER_COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.14159);
-    static final double DRIVE_SPEED = 0.2;
-    static final double STRAFE_SPEED = 0.8;
+    static final double DRIVE_SPEED = 0.1;
+    static final double STRAFE_SPEED = 0.4;
     //Drive motors
     DcMotor rfmotor, rbmotor, lfmotor, lbmotor;
     //Utility motors
@@ -241,10 +241,10 @@ public abstract class Auto_Util extends LinearOpMode{
 
             // reset the timeout time and start motion.
             runtime.reset();
-            rbmotor.setPower((rightSpeed + PI(desiredHeading)));
-            rfmotor.setPower((rightSpeed + PI(desiredHeading)));
-            lfmotor.setPower((leftSpeed - PI(desiredHeading)));
-            lbmotor.setPower((leftSpeed -  PI(desiredHeading)));
+            rbmotor.setPower(0.7*(rightSpeed + PI(desiredHeading)));
+            rfmotor.setPower(0.7*(rightSpeed + PI(desiredHeading)));
+            lfmotor.setPower(0.7*(leftSpeed - PI(desiredHeading)));
+            lbmotor.setPower(0.7*(leftSpeed -  PI(desiredHeading)));
 
             //prints the desired position and actual position of all four motors
             //adjusts the motor powers according to the PI function
@@ -265,10 +265,10 @@ public abstract class Auto_Util extends LinearOpMode{
                 telemetry.update();
                 leftSpeed = (accelerate(lbmotor,leftSpeed,leftBackTarget)+accelerate(lfmotor,leftSpeed,leftFrontTarget)/2);
                 rightSpeed = (accelerate(rbmotor,rightSpeed,rightBackTarget)+accelerate(rfmotor,rightSpeed,rightFrontTarget)/2);
-                rbmotor.setPower((rightSpeed + PI(desiredHeading)));
-                rfmotor.setPower((rightSpeed + PI(desiredHeading)));
-                lfmotor.setPower((leftSpeed - PI(desiredHeading)));
-                lbmotor.setPower((leftSpeed -  PI(desiredHeading)));
+                rbmotor.setPower(0.7*(rightSpeed + PI(desiredHeading)));
+                rfmotor.setPower(0.7*(rightSpeed + PI(desiredHeading)));
+                lfmotor.setPower(0.7*(leftSpeed - PI(desiredHeading)));
+                lbmotor.setPower(0.7*(leftSpeed -  PI(desiredHeading)));
             }
 
             lbmotor.setPower(0);
@@ -323,10 +323,10 @@ public abstract class Auto_Util extends LinearOpMode{
 
             // reset the timeout time and start motion.
             runtime.reset();
-            rbmotor.setPower((rightSpeed + PI(desiredHeading)));
-            rfmotor.setPower((rightSpeed + PI(desiredHeading)));
-            lfmotor.setPower((leftSpeed - PI(desiredHeading)));
-            lbmotor.setPower((leftSpeed -  PI(desiredHeading)));
+            rbmotor.setPower(0.7*(rightSpeed + PI(desiredHeading)));
+            rfmotor.setPower(0.7*(rightSpeed + PI(desiredHeading)));
+            lfmotor.setPower(0.7*(leftSpeed - PI(desiredHeading)));
+            lbmotor.setPower(0.7*(leftSpeed -  PI(desiredHeading)));
 
             //prints the desired position and actual position of all four motors
             //adjusts the motor powers according to the PI function
@@ -348,10 +348,10 @@ public abstract class Auto_Util extends LinearOpMode{
                 telemetry.update();
                 leftSpeed = (accelerate(lbmotor,leftSpeed,leftBackTarget)+accelerate(lfmotor,leftSpeed,leftFrontTarget)/2);
                 rightSpeed = (accelerate(rbmotor,rightSpeed,rightBackTarget)+accelerate(rfmotor,rightSpeed,rightFrontTarget)/2);
-                rbmotor.setPower((rightSpeed + PI(desiredHeading)));
-                rfmotor.setPower((rightSpeed + PI(desiredHeading)));
-                lfmotor.setPower((leftSpeed - PI(desiredHeading)));
-                lbmotor.setPower((leftSpeed -  PI(desiredHeading)));
+                rbmotor.setPower(0.7*(rightSpeed + PI(desiredHeading)));
+                rfmotor.setPower(0.7*(rightSpeed + PI(desiredHeading)));
+                lfmotor.setPower(0.7*(leftSpeed - PI(desiredHeading)));
+                lbmotor.setPower(0.7*(leftSpeed -  PI(desiredHeading)));
             }
 
             lbmotor.setPower(0);
@@ -445,8 +445,10 @@ public abstract class Auto_Util extends LinearOpMode{
     public void turnRight(double time){
         runtime.reset();
         while(runtime.seconds() < time){
-            rfmotor.setPower(-1); rbmotor.setPower(-1);
-            lfmotor.setPower(1); lbmotor.setPower(1);
+            rfmotor.setPower(-0.5); rbmotor.setPower(-0.5);
+            lfmotor.setPower(0.5); lbmotor.setPower(0.5);
+            telemetry.addData("seconds or somethin", runtime.seconds());
+            telemetry.update();
         }
         rfmotor.setPower(0); rbmotor.setPower(0);
         lfmotor.setPower(0); lbmotor.setPower(0);

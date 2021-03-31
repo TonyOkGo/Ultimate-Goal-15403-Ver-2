@@ -143,8 +143,8 @@ public class FirstSemesterTeleop extends LinearOpMode {
            IntakeSpeed=gamepad2.right_stick_y;
             robot.intakeMotor.setPower(-IntakeSpeed);
             robot.pastaMotor.setPower(-IntakeSpeed);
-            robot.pastaServo.setPower(IntakeSpeed*2);
-            robot.pastaServo2.setPower(-IntakeSpeed*2);
+            robot.pastaServo.setPower(IntakeSpeed);
+            robot.pastaServo2.setPower(-IntakeSpeed);
 
             if(gamepad2.x) {
                 robot.pastaServo.setPower(1);

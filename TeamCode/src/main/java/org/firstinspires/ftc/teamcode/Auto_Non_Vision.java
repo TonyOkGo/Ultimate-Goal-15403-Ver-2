@@ -9,12 +9,14 @@ public class Auto_Non_Vision extends Auto_Util {
     public void runOpMode() throws InterruptedException {
         initAuto();
         waitForStart();
-        encoderStrafe(STRAFE_SPEED, -16,-16,10,0);
-        encoderDrive(DRIVE_SPEED, -25,-25,10,0);
+        encoderStrafe(STRAFE_SPEED, -5,-5,10,0);
+        //encoderDrive(DRIVE_SPEED, -25,-25,10,0);
         //funny scan vision
-        encoderStrafe(STRAFE_SPEED, 16,16,10,0);
-        encoderDrive(DRIVE_SPEED, -35,-35,10,0);
-        turnLeft(2.5);
+        //encoderStrafe(STRAFE_SPEED, -15,-24,10,0);
+        //encoderDrive(DRIVE_SPEED, -30,-30,10,0);
+        //encoderStrafe(STRAFE_SPEED, 22,22,10,0);
+        //encoderDrive(DRIVE_SPEED, -7,-7,10,0);
+        //encoderDrive(DRIVE_SPEED, -2.2,2.2,10,0);
         runtime.reset();
         utilmotor3.setPower(-1);
         sleep(900);
