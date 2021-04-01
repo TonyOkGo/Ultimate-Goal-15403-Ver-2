@@ -52,7 +52,8 @@ public class FirstSemesterTeleop extends LinearOpMode {
     static double rightBackPower;
     static final double     MAX_SPEED = 1;
     static double IntakeSpeed;
-
+    static int togglex;
+    static int toggley;
     @Override
     public void runOpMode() {
         double elapTime = System.currentTimeMillis();
@@ -90,7 +91,7 @@ public class FirstSemesterTeleop extends LinearOpMode {
             robot.rightbackDrive.setPower(-rightBackPower);
             telemetry.addData("Speed", robot.rightbackDrive.getPower());
             telemetry.update();
-            if(gamepad2.right_bumper==true) {
+            if(gamepad2.right_trigger != 0) {
                 double period = 5000;
                 double quadScale = 0.1;
                 CurTime = elapTime;
@@ -129,47 +130,25 @@ public class FirstSemesterTeleop extends LinearOpMode {
 
 
             //IntakeSpeed=-gamepad2.right_stick_y;
-           /* if (gamepad2.b){
+            if (gamepad2.b){
                 robot.intakeMotor.setPower(1);
                 robot.pastaMotor.setPower(1);
-                robot.pastaServo.setPower(1);
-                robot.pastaServo2.setPower(-1);
+                //robot.pastaServo.setPower(1);
+                //robot.pastaServo2.setPower(-1);
             } else{
                 robot.intakeMotor.setPower(0);
                 robot.pastaMotor.setPower(0);
-                robot.pastaServo.setPower(0);
-                robot.pastaServo2.setPower(0);
-            }*/
+                //robot.pastaServo.setPower(0);
+                //robot.pastaServo2.setPower(0);
+            }
            IntakeSpeed=gamepad2.right_stick_y;
-            robot.intakeMotor.setPower(-IntakeSpeed);
-            robot.pastaMotor.setPower(-IntakeSpeed);
             robot.pastaServo.setPower(IntakeSpeed);
             robot.pastaServo2.setPower(-IntakeSpeed);
-
-            if(gamepad2.x) {
-                robot.pastaServo.setPower(1);
-                robot.pastaServo2.setPower(-1);
-                robot.pastaMotor.setPower(1);
-            }
-            else{
-                robot.pastaServo.setPower(0);
-                robot.pastaServo2.setPower(0);
-                robot.pastaMotor.setPower(0);
-            }
-            if (gamepad2.y) {
-                robot.pastaServo.setPower(-1);
-                robot.pastaServo2.setPower(1);
-                robot.pastaMotor.setPower(1);
+            robot.pastaMotor.setPower(IntakeSpeed);
+            robot.intakeMotor.setPower(IntakeSpeed);
 
 
-            }
-            else {
-                robot.pastaServo.setPower(0);
-                robot.pastaServo2.setPower(0);
-                robot.pastaMotor.setPower(0);
 
-
-            }
         }
 
 

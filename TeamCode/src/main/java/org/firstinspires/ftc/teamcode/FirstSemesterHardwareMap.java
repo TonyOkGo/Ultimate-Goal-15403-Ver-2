@@ -32,15 +32,21 @@ public class FirstSemesterHardwareMap extends  HardwareMapUtil
         hwMap = ahwMap;
         shooterMotor = HardwareInitMotor("shootM", true);
         wobbleGrabMotor = HardwareInitMotor("wobbleG", true);
-        wobbleGrabServo = HardwareInitCRServo("wobbleS", false);
+        //wobbleGrabServo = HardwareInitCRServo("wobbleS", false);
         leftfrontDrive = HardwareInitMotor("lfD", true);
         rightbackDrive = HardwareInitMotor("rbD", false);
         leftbackDrive = HardwareInitMotor("lbD", true);
         rightfrontDrive = HardwareInitMotor("rfD", false);
         intakeMotor = HardwareInitMotor("Intake", false);
         pastaMotor = HardwareInitMotor("pastaM", false);
-        pastaServo = HardwareInitCRServo("pastaS", false);
-        pastaServo2 = HardwareInitCRServo("pastaS2", false);
+        wobbleGrabServo = hwMap.get(CRServo.class, "wobbleS");
+        wobbleGrabServo.setPower(0);
+        pastaServo = hwMap.get(CRServo.class, "pastaS");
+        pastaServo2 = hwMap.get(CRServo.class, "pastaS2");
+        pastaServo.setDirection(CRServo.Direction.FORWARD);
+        pastaServo2.setDirection(CRServo.Direction.FORWARD);
+        pastaServo.setPower(0);
+        pastaServo2.setPower(0);
 
     }
 }
