@@ -372,6 +372,19 @@ public abstract class Auto_Util extends LinearOpMode{
         rbmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rfmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
+    public void shoot(double time){
+        runtime.reset();
+        utilmotor3.setPower(-1);
+        sleep(900);
+        while(runtime.seconds() < time){
+            utilmotor1.setPower(-1); utilmotor2.setPower(-1);
+            utilmotor3.setPower(-1); crservo1.setPower(1);
+            crservo2.setPower(-1);
+        }
+        utilmotor1.setPower(0); utilmotor2.setPower(0);
+        utilmotor3.setPower(0); crservo1.setPower(0);
+        crservo2.setPower(0);
+    }
 
     /*
     lfD
