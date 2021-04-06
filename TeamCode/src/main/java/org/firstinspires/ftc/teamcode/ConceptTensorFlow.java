@@ -122,6 +122,10 @@ public class ConceptTensorFlow extends RandomElementDetector {
         }
     }
 
+    private String RandomElementNumber() {
+        return null;
+    }
+
 
     /**
      * Initialize the Vuforia localization engine.
