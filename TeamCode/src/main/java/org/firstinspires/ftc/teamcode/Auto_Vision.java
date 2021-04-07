@@ -28,6 +28,7 @@ public class Auto_Vision extends Auto_Util {
             encoderDrive(DRIVE_SPEED, -1.6,1.6,10,0);
         }
         else{
+            //drive around the ring pile
             encoderStrafe(STRAFE_SPEED, -14,-14,10,0);
             encoderDrive(DRIVE_SPEED, -30,-30,10,0);
             encoderStrafe(STRAFE_SPEED, 12,12,10,0);
@@ -40,7 +41,8 @@ public class Auto_Vision extends Auto_Util {
             //strafe left to be lined up with the first square
             //drop the arm motor
             //open the arm servo
-            //drive backwards
+            //strafe out of the way of the wobble goal
+            //drive back onto the line to park
             encoderStrafe(DRIVE_SPEED,25,25,10,0);
             utilmotor4.setPower(0.6);
             sleep(600);
@@ -51,6 +53,7 @@ public class Auto_Vision extends Auto_Util {
 
         }
         if(amountofrings ==1){
+            //strafe a tiny bit to line up with the second square
             //drive forward to be lined up with that square
             //drop the arm motor
             //open the arm servo
