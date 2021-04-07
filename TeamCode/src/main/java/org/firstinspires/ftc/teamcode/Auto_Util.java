@@ -47,7 +47,7 @@ public abstract class Auto_Util extends LinearOpMode{
     //odometry encoders
     DcMotor verticalLeft, verticalRight, horizontal;
     //servos
-    CRServo servo1;
+    Servo servo1;
     CRServo crservo1, crservo2;
     ElapsedTime runtime = new ElapsedTime();
     BNO055IMU imu;
@@ -181,8 +181,8 @@ public abstract class Auto_Util extends LinearOpMode{
         utilmotor4.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
     private void initServoHardwareMap(String servo1name, String crservo1name, String crservo2name){
-        servo1 = hardwareMap.crservo.get(servo1name);
-        servo1.setPower(0);
+        servo1 = hardwareMap.servo.get(servo1name);
+        servo1.setPosition(0);
         crservo1 = hardwareMap.crservo.get(crservo1name);
         crservo2 = hardwareMap.crservo.get(crservo2name);
         crservo1.setDirection(CRServo.Direction.FORWARD);

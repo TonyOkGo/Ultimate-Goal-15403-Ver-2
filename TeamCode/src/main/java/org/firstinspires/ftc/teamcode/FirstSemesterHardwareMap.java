@@ -16,7 +16,7 @@ public class FirstSemesterHardwareMap extends  HardwareMapUtil
     /* Public OpMode members. */
     public DcMotor  shooterMotor        = null;
     public DcMotor  wobbleGrabMotor     = null;
-    public CRServo    wobbleGrabServo     = null;
+    public Servo    wobbleGrabServo     = null;
     //public DcMotor linearActuator = null;
     public DcMotor  leftfrontDrive   = null;
     public DcMotor  rightfrontDrive  = null;
@@ -39,8 +39,8 @@ public class FirstSemesterHardwareMap extends  HardwareMapUtil
         rightfrontDrive = HardwareInitMotor("rfD", false);
         intakeMotor = HardwareInitMotor("Intake", false);
         pastaMotor = HardwareInitMotor("pastaM", false);
-        wobbleGrabServo = hwMap.get(CRServo.class, "wobbleS");
-        wobbleGrabServo.setPower(0);
+        wobbleGrabServo = hwMap.get(Servo.class, "wobbleS");
+        wobbleGrabServo.setPosition(0);
         pastaServo = hwMap.get(CRServo.class, "pastaS");
         pastaServo2 = hwMap.get(CRServo.class, "pastaS2");
         pastaServo.setDirection(CRServo.Direction.FORWARD);
