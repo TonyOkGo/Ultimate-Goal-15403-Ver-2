@@ -9,7 +9,12 @@ public class Auto_Vision extends Auto_Util {
     public void runOpMode() throws InterruptedException {
         int amountofrings = 0;
         initAuto();
+        utilmotor4.setPower(-0.6);
+        sleep(300);
+        utilmotor4.setPower(0);
         initCamera();
+        telemetry.addData("Initialization complete", "yup");
+        telemetry.update();
         waitForStart();
         //Line up to the rings in order to scan
         encoderStrafe(STRAFE_SPEED, -5,-5,10,0);
@@ -36,20 +41,21 @@ public class Auto_Vision extends Auto_Util {
             encoderDrive(DRIVE_SPEED, -2.2,2.2,10,0);
         }
 
-        shoot(5);
+        smartShoot(7);
         if(amountofrings == 0){
             //strafe left to be lined up with the first square
             //drop the arm motor
             //open the arm servo
             //strafe out of the way of the wobble goal
             //drive back onto the line to park
-            encoderStrafe(DRIVE_SPEED,25,25,10,0);
+            encoderStrafe(DRIVE_SPEED,30,30,10,0);
             utilmotor4.setPower(0.6);
             sleep(600);
             utilmotor4.setPower(0);
             servo1.setPosition(10);
+            encoderDrive(10,10,10,10,0);
             encoderStrafe(DRIVE_SPEED,-25,-25,10,0);
-            encoderDrive(DRIVE_SPEED,-10,-10,10,0);
+            encoderDrive(DRIVE_SPEED,-20,-20,10,0);
 
         }
         if(amountofrings ==1){

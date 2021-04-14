@@ -34,12 +34,13 @@ right front motor = 3
  */
 public abstract class Auto_Util extends LinearOpMode{
     static final double COUNTS_PER_MOTOR_REV = 1120;    // eg: TETRIX Motor Encoder
-    static final double DRIVE_GEAR_REDUCTION = 1;     // This is < 1.0 if geared UP
+    static final double DRIVE_GEAR_REDUCTION = 0.75;     // This is < 1.0 if geared UP
     static final double WHEEL_DIAMETER_INCHES = 4.0;     // For figuring circumference
     static final double ENCODER_COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.14159);
     static final double DRIVE_SPEED = 0.1;
     static final double STRAFE_SPEED = 0.4;
+    static final double TARGET_SHOOTER_SPEED = 2;
     //Drive motors
     DcMotor rfmotor, rbmotor, lfmotor, lbmotor;
     //Utility motors
@@ -58,6 +59,7 @@ public abstract class Auto_Util extends LinearOpMode{
     String verticalLeftEncoderName = lbName, verticalRightEncoderName = lfName, horizontalEncoderName = rfName;
     OdometryGlobalCoordinatePosition globalPositionUpdate;
     final double ODOMETRY_COUNTS_PER_INCH = 307.699557;
+    static double motor_power;
 
     //Variables for Camera
     private static final String TFOD_MODEL_ASSET = "UltimateGoal.tflite";
@@ -167,7 +169,7 @@ public abstract class Auto_Util extends LinearOpMode{
 
         utilmotor1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         utilmotor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        utilmotor3.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        utilmotor3.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         utilmotor4.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         utilmotor1.setDirection(DcMotor.Direction.FORWARD);
@@ -378,6 +380,65 @@ public abstract class Auto_Util extends LinearOpMode{
         utilmotor1.setPower(0); utilmotor2.setPower(0);
         utilmotor3.setPower(0); crservo1.setPower(0);
         crservo2.setPower(0);
+    }
+    public void smartShoot (double time){
+        double current_speed;
+        double numberofRevolutions;
+        double velocityoffset;
+        double shooterpower;
+        runtime.reset();
+        while(runtime.seconds() < time){
+            if(runtime.seconds() > 4){
+                utilmotor1.setPower(-1);
+                utilmotor2.setPower(-1);
+                crservo1.setPower(1);
+                crservo2.setPower(-1);
+            }
+            numberofRevolutions = utilmotor3.getCurrentPosition()/COUNTS_PER_MOTOR_REV;
+            current_speed = numberofRevolutions/runtime.seconds();
+            velocityoffset = -TARGET_SHOOTER_SPEED-current_speed;
+            velocityoffset = velocityoffset*1.6;
+
+            shooterpower = -Math.abs(-1 + velocityoffset);
+            utilmotor3.setPower(shooterpower);
+            telemetry.addData("Encoder Value", utilmotor3.getCurrentPosition());
+            telemetry.addData("Current Speed", current_speed);
+            telemetry.addData("Velocity offset", velocityoffset);
+            telemetry.addData("Motor Power", shooterpower);
+            telemetry.update();
+
+            //utilmotor3.setPower(-1);
+
+        }
+        utilmotor1.setPower(0); utilmotor2.setPower(0);
+        utilmotor3.setPower(0); crservo1.setPower(0);
+        crservo2.setPower(0);
+    }
+
+    public void smartShootWindUp (double time){
+        double current_speed;
+        double numberofRevolutions;
+        double velocityoffset;
+        //double shooterpower;
+        runtime.reset();
+        while(runtime.seconds() < time){
+            numberofRevolutions = utilmotor3.getCurrentPosition()/COUNTS_PER_MOTOR_REV;
+            current_speed = numberofRevolutions/runtime.seconds();
+            velocityoffset = -TARGET_SHOOTER_SPEED-current_speed;
+            velocityoffset = velocityoffset*1.6;
+
+            motor_power = -Math.abs(-1 + velocityoffset);
+            utilmotor3.setPower(motor_power);
+            telemetry.addData("Encoder Value", utilmotor3.getCurrentPosition());
+            telemetry.addData("Current Speed", current_speed);
+            telemetry.addData("Velocity offset", velocityoffset);
+            telemetry.addData("Motor Power", motor_power);
+            telemetry.update();
+
+            //utilmotor3.setPower(-1);
+
+        }
+        utilmotor3.setPower(0);
     }
 
     /*
