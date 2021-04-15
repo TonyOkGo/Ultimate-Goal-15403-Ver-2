@@ -370,7 +370,7 @@ public abstract class Auto_Util extends LinearOpMode{
     }
     public void shoot(double time){
         runtime.reset();
-        utilmotor3.setPower(-1);
+        utilmotor3.setPower(motor_power);
         sleep(900);
         while(runtime.seconds() < time){
             utilmotor1.setPower(-1); utilmotor2.setPower(-1);
@@ -385,7 +385,6 @@ public abstract class Auto_Util extends LinearOpMode{
         double current_speed;
         double numberofRevolutions;
         double velocityoffset;
-        double shooterpower;
         runtime.reset();
         while(runtime.seconds() < time){
             if(runtime.seconds() > 4){
@@ -399,12 +398,12 @@ public abstract class Auto_Util extends LinearOpMode{
             velocityoffset = -TARGET_SHOOTER_SPEED-current_speed;
             velocityoffset = velocityoffset*1.6;
 
-            shooterpower = -Math.abs(-1 + velocityoffset);
-            utilmotor3.setPower(shooterpower);
+            motor_power = -Math.abs(-1 + velocityoffset);
+            utilmotor3.setPower(motor_power);
             telemetry.addData("Encoder Value", utilmotor3.getCurrentPosition());
             telemetry.addData("Current Speed", current_speed);
             telemetry.addData("Velocity offset", velocityoffset);
-            telemetry.addData("Motor Power", shooterpower);
+            telemetry.addData("Motor Power", motor_power);
             telemetry.update();
 
             //utilmotor3.setPower(-1);

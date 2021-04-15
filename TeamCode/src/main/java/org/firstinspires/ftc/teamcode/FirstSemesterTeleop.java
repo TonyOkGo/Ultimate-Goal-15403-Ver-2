@@ -50,8 +50,10 @@ public class FirstSemesterTeleop extends LinearOpMode {
     static double leftBackPower;
     static double rightFrontPower;
     static double rightBackPower;
+    static double encoderfunnys;
     static final double     MAX_SPEED = 1;
     static double IntakeSpeed;
+    static double slowamount = 1;
     static int togglex;
     static int toggley;
     @Override
@@ -62,8 +64,10 @@ public class FirstSemesterTeleop extends LinearOpMode {
         double timeShooting = 0;
         double CurTime = elapTime;
         double LastTime = elapTime;
-
-
+        double numberofRevolutions;
+        double current_speed;
+        double velocityoffset;
+        double motor_power;
 
         double mPow = 0;
 
@@ -85,32 +89,38 @@ public class FirstSemesterTeleop extends LinearOpMode {
             rightFrontPower = fwdBackPower + turnPower + strafePower;
             leftBackPower = fwdBackPower - turnPower + strafePower;
             rightBackPower = fwdBackPower + turnPower - strafePower;
-            robot.leftfrontDrive.setPower(-leftFrontPower);
-            robot.rightfrontDrive.setPower(-rightFrontPower);
-            robot.leftbackDrive.setPower(-leftBackPower);
-            robot.rightbackDrive.setPower(-rightBackPower);
-            telemetry.addData("Speed", robot.rightbackDrive.getPower());
-            telemetry.update();
+            robot.leftfrontDrive.setPower(-leftFrontPower*slowamount);
+            robot.rightfrontDrive.setPower(-rightFrontPower*slowamount);
+            robot.leftbackDrive.setPower(-leftBackPower*slowamount);
+            robot.rightbackDrive.setPower(-rightBackPower*slowamount);
             if(gamepad2.right_trigger != 0) {
-                double period = 5000;
-                double quadScale = 0.1;
-                CurTime = elapTime;
-                timeShooting = timeShooting + (LastTime-CurTime);
-                LastTime = CurTime;
 
-                if(timeShooting > period) {
-                    power = Math.pow((timeShooting/period), 3);
-                }
-                else {
-                    power = -1;
-                }
-            }
-            else {
-                timeShooting = 0;
-                power = 0;
-            }
+                numberofRevolutions = (robot.shooterMotor.getCurrentPosition()-encoderfunnys)/1120;
+                current_speed = numberofRevolutions/runtime.seconds();
+                velocityoffset = -(2)-current_speed;
+                velocityoffset = velocityoffset*1.6;
 
-            robot.shooterMotor.setPower(power*.95);
+                motor_power = -Math.abs(-1 + velocityoffset);
+                robot.shooterMotor.setPower(motor_power);
+                telemetry.addData("seconds passed", runtime.seconds());
+                telemetry.addData("encoderfunnys",encoderfunnys);
+                telemetry.addData("Encoder Value", robot.shooterMotor.getCurrentPosition());
+                telemetry.addData("Current Speed", current_speed);
+                telemetry.addData("Velocity offset", velocityoffset);
+                telemetry.addData("Motor Power", motor_power);
+                telemetry.update();
+            }
+            else{
+                encoderfunnys = robot.shooterMotor.getCurrentPosition();
+                runtime.reset();
+                robot.shooterMotor.setPower(0);
+            }
+            if(gamepad1.right_trigger != 0){
+                slowamount = 0.5;
+            }
+            else{
+                slowamount = 1;
+            }
             mPow = gamepad2.left_stick_y/3;
            robot.wobbleGrabMotor.setPower(-mPow);
             if(gamepad2.x) {
