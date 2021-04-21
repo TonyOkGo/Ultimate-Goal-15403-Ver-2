@@ -9,7 +9,12 @@ public class Auto_Vision extends Auto_Util {
     public void runOpMode() throws InterruptedException {
         int amountofrings = 0;
         initAuto();
+        utilmotor4.setPower(-0.6);
+        sleep(300);
+        utilmotor4.setPower(0);
         initCamera();
+        telemetry.addData("Initialization complete", "yup");
+        telemetry.update();
         waitForStart();
         //Line up to the rings in order to scan
         encoderStrafe(STRAFE_SPEED, -5,-5,10,0);
@@ -24,7 +29,7 @@ public class Auto_Vision extends Auto_Util {
 
         //Drive to the line and shoot the rings into the goal
         if(amountofrings == 0){
-            encoderDrive(DRIVE_SPEED, -37,-37,10,0);
+            encoderDrive(DRIVE_SPEED, -39,-39,10,0);
             encoderDrive(DRIVE_SPEED, -1.6,1.6,10,0);
         }
         else{
@@ -32,26 +37,25 @@ public class Auto_Vision extends Auto_Util {
             encoderStrafe(STRAFE_SPEED, -14,-14,10,0);
             encoderDrive(DRIVE_SPEED, -30,-30,10,0);
             encoderStrafe(STRAFE_SPEED, 12,12,10,0);
-            //encoderDrive(DRIVE_SPEED, -7,-7,10,0);
-            encoderDrive(DRIVE_SPEED, 10, 10, 10, 0);
-            colorAlignment();
-            //encoderDrive(DRIVE_SPEED, -2.2,2.2,10,0);
+            encoderDrive(DRIVE_SPEED, -9,-9,10,0);
+            encoderDrive(DRIVE_SPEED, -2.8,2.8,10,0);
         }
 
-        shoot(5);
+        smartShoot(7);
         if(amountofrings == 0){
             //strafe left to be lined up with the first square
             //drop the arm motor
             //open the arm servo
             //strafe out of the way of the wobble goal
             //drive back onto the line to park
-            encoderStrafe(DRIVE_SPEED,25,25,10,0);
+            encoderStrafe(DRIVE_SPEED,30,30,10,0);
             utilmotor4.setPower(0.6);
             sleep(600);
             utilmotor4.setPower(0);
             servo1.setPosition(10);
+            encoderDrive(10,10,10,10,0);
             encoderStrafe(DRIVE_SPEED,-25,-25,10,0);
-            encoderDrive(DRIVE_SPEED,-10,-10,10,0);
+            encoderDrive(DRIVE_SPEED,-20,-20,10,0);
 
         }
         if(amountofrings ==1){
@@ -74,7 +78,7 @@ public class Auto_Vision extends Auto_Util {
             //drop the arm motor
             //open the arm servo
             //drive backwards
-            encoderStrafe(DRIVE_SPEED,30,30,10,0);
+            encoderStrafe(DRIVE_SPEED,33,33,10,0);
             encoderDrive(DRIVE_SPEED,-48,-48,10,0);
             utilmotor4.setPower(0.6);
             sleep(600);
