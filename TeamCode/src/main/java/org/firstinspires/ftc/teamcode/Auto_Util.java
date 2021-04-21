@@ -1,10 +1,13 @@
 package org.firstinspires.ftc.teamcode;
 
+import android.graphics.Color;
+
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -68,6 +71,14 @@ public abstract class Auto_Util extends LinearOpMode{
             "ASr8vlr/////AAABmQLvbOpFkkU9uYwJWNx5o2Antqe3VGKoedUKq3jObB/CKqlUQVEt/vJFkLrOinRFu+wKPJJx1LZe8vYwTUNhYX0/ygb2Oukz3sgnh3k0TMAWBL0gJXnlaw2JzGzwXMy7kL4K1EUdIoWKJgyMSDkWDeNa9JXMelIkU0mgPhQ1PpSqfDiFWcIpalRHVDMF+lR7wR67jJjt7sUWe3TPc2RoUZI9Ratv22wKzXGZTWUEHcvPIkJRyZjjXzzWper4e7gVhJBLEtZA/0U5Nqlasyl0A39AzatrIkCAa16P3J8Z0KKtza1YSKZRYc/Sz022CaSqCtgtG1jq5oK14I2JjQZIufdNLNc9uaXz3qN08jRaxujJ";
     private VuforiaLocalizer vuforia;
     private TFObjectDetector tfod;
+
+    //ColorSensor colorSensorLeft;
+    //ColorSensor colorSensorRight;
+    float hsvValuesLeft[] = {0F,0F,0F};
+    float hsvValuesRight[] = {0F, 0F, 0F};
+
+    ColorSensor colorSensorLeft;
+    ColorSensor colorSensorRight;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -413,6 +424,8 @@ public abstract class Auto_Util extends LinearOpMode{
          parameters.calibrationDataFile = "BNO055IMUCalibration.json"; // see the calibration sample opmodeaz
          imu = hardwareMap.get(BNO055IMU.class, "imu");
          imu.initialize(parameters);
+         colorSensorLeft = hardwareMap.get(ColorSensor .class, "colorLeft");
+         colorSensorRight = hardwareMap.get(ColorSensor .class, "colorRight");
      }
 
     public double accelerate(DcMotor motor, double speed, double target){
@@ -513,6 +526,41 @@ public abstract class Auto_Util extends LinearOpMode{
         tfodParameters.minResultConfidence = 0.8f;
         tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
         tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABEL_FIRST_ELEMENT, LABEL_SECOND_ELEMENT);
+    }
+
+    public void colorAlignment() {
+        colorSensorLeft.enableLed(true);
+        colorSensorRight.enableLed(true);
+        Color.RGBToHSV(colorSensorLeft.red() * 8, colorSensorLeft.green() * 8, colorSensorLeft.blue() * 8, hsvValuesLeft);
+        Color.RGBToHSV(colorSensorRight.red() * 8, colorSensorRight.green() * 8, colorSensorRight.blue() * 8, hsvValuesRight);
+
+        telemetry.addLine("HueLR: " + hsvValuesLeft[0] + ", " + hsvValuesRight[0]);
+        telemetry.addLine("SaturLR: " + hsvValuesLeft[1] + ", " + hsvValuesRight[1]);
+        telemetry.addLine("ValLR: " + hsvValuesLeft[2] + ", " + hsvValuesRight[2]);
+
+        if(hsvValuesLeft[2] >= 80 && hsvValuesRight[2] >= 80) {
+            lfmotor.setPower(0);
+            lbmotor.setPower(0);
+            rfmotor.setPower(0);
+            rbmotor.setPower(0);
+            telemetry.addLine("Yay on the line");
+            telemetry.update();
+            //break;
+        }
+        else if(hsvValuesLeft[2] >= 120) {
+            turnLeft(.05);
+        }
+        else if(hsvValuesRight[2] >= 120) {
+            turnRight(.05);
+        }
+        else {
+            lfmotor.setPower(-.1);
+            lbmotor.setPower(-.1);
+            rfmotor.setPower(-.1);
+            rbmotor.setPower(-.1);
+        }
+
+        telemetry.update();
     }
 }
 

@@ -13,6 +13,8 @@ public class ColorAlignment extends Auto_Util {
 
     @Override
     public void runOpMode() throws InterruptedException {
+        initAuto();
+
         float hsvValuesLeft[] = {0F,0F,0F};
         float hsvValuesRight[] = {0F, 0F, 0F};
 
@@ -31,19 +33,26 @@ public class ColorAlignment extends Auto_Util {
             telemetry.addLine("SaturLR: " + hsvValuesLeft[1] + ", " + hsvValuesRight[1]);
             telemetry.addLine("ValLR: " + hsvValuesLeft[2] + ", " + hsvValuesRight[2]);
 
-            if(hsvValuesLeft[1] <= 20 && hsvValuesRight[1] <= 20) {
+            if(hsvValuesLeft[2] >= 80 && hsvValuesRight[2] >= 80) {
+                lfmotor.setPower(0);
+                lbmotor.setPower(0);
+                rfmotor.setPower(0);
+                rbmotor.setPower(0);
                 telemetry.addLine("Yay on the line");
                 telemetry.update();
-                break;
+                //break;
             }
-            else if(hsvValuesLeft[1] <= 20) {
-                turnRight(.1);
+            else if(hsvValuesLeft[2] >= 120) {
+                turnLeft(.05);
             }
-            else if(hsvValuesRight[1] <= 20) {
-                turnLeft(.1);
+            else if(hsvValuesRight[2] >= 120) {
+                turnRight(.05);
             }
             else {
-                encoderDrive(1, .1, .1, 10, 0);
+                lfmotor.setPower(-.1);
+                lbmotor.setPower(-.1);
+                rfmotor.setPower(-.1);
+                rbmotor.setPower(-.1);
             }
 
             telemetry.update();
