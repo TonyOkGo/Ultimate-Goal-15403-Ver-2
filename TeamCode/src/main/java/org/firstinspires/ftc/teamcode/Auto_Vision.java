@@ -37,8 +37,10 @@ public class Auto_Vision extends Auto_Util {
             encoderStrafe(STRAFE_SPEED, -14,-14,10,0);
             encoderDrive(DRIVE_SPEED, -30,-30,10,0);
             encoderStrafe(STRAFE_SPEED, 12,12,10,0);
-            encoderDrive(DRIVE_SPEED, -9,-9,10,0);
-            encoderDrive(DRIVE_SPEED, -2.8,2.8,10,0);
+            //encoderDrive(DRIVE_SPEED, -9,-9,10,0);
+            encoderDrive(DRIVE_SPEED, -7, -7, 10, 0);
+            colorAlignment();
+            //encoderDrive(DRIVE_SPEED, -2.8,2.8,10,0);
         }
 
         smartShoot(7);
