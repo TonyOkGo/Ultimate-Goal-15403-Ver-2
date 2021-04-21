@@ -16,8 +16,8 @@ public class ColorAlignment extends Auto_Util {
         float hsvValuesLeft[] = {0F,0F,0F};
         float hsvValuesRight[] = {0F, 0F, 0F};
 
-        colorSensorLeft = hardwareMap.get(ColorSensor.class, "idk");
-        colorSensorRight = hardwareMap.get(ColorSensor.class, "idk2");
+        colorSensorLeft = hardwareMap.get(ColorSensor.class, "colorLeft");
+        colorSensorRight = hardwareMap.get(ColorSensor.class, "colorRight");
 
         colorSensorLeft.enableLed(true);
         colorSensorRight.enableLed(true);
