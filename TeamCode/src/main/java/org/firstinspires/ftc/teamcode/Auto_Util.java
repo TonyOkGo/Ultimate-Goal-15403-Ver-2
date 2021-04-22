@@ -566,13 +566,6 @@ public abstract class Auto_Util extends LinearOpMode {
         vuforia = ClassFactory.getInstance().createVuforia(parameters);
     }
 
-    /*
-    ___________________________________________________________________________________________________________________________________
-    -
-    -Color ALignment Test Program
-    -
-    ___________________________________________________________________________________________________________________________________
-     */
     private void initTfod() {
         int tfodMonitorViewId = hardwareMap.appContext.getResources().getIdentifier(
                 "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName());
@@ -581,6 +574,14 @@ public abstract class Auto_Util extends LinearOpMode {
         tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
         tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABEL_FIRST_ELEMENT, LABEL_SECOND_ELEMENT);
     }
+
+        /*
+    ___________________________________________________________________________________________________________________________________
+    -
+    -COLOR ALIGNMENT TEST PROGRAM
+    -
+    ___________________________________________________________________________________________________________________________________
+     */
 
     public void colorAlignment() {
         Color.RGBToHSV(colorSensorLeft.red() * 8, colorSensorLeft.green() * 8, colorSensorLeft.blue() * 8, hsvValuesLeft);
