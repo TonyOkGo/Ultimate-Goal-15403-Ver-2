@@ -12,6 +12,7 @@ public class Auto_Vision extends Auto_Util {
         utilmotor4.setPower(-0.6);
         sleep(300);
         utilmotor4.setPower(0);
+
         initCamera();
         telemetry.addData("Initialization complete", "yup");
         telemetry.update();
@@ -38,7 +39,8 @@ public class Auto_Vision extends Auto_Util {
             encoderDrive(DRIVE_SPEED, -30,-30,10,0);
             encoderStrafe(STRAFE_SPEED, 12,12,10,0);
             //encoderDrive(DRIVE_SPEED, -9,-9,10,0);
-            encoderDrive(DRIVE_SPEED, -7, -7, 10, 0);
+            encoderDrive(DRIVE_SPEED, -9, -9, 10, 0);
+            sleep(500);
             colorAlignment();
             //encoderDrive(DRIVE_SPEED, -2.8,2.8,10,0);
         }
@@ -67,7 +69,7 @@ public class Auto_Vision extends Auto_Util {
             //open the arm servo
             //drive backwards
             encoderStrafe(DRIVE_SPEED,10,10,10,0);
-            encoderDrive(DRIVE_SPEED,-24,-24,10,0);
+            encoderDrive(DRIVE_SPEED,-20,-20,10,0);
             utilmotor4.setPower(0.6);
             sleep(600);
             utilmotor4.setPower(0);

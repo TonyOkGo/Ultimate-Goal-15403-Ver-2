@@ -547,6 +547,7 @@ public abstract class Auto_Util extends LinearOpMode {
 
     public void initCamera() {
         initVuforia();
+        telemetry.addData("completed vuforia init", "uhuh");
         initTfod();
         stackSize = 0;
         if (tfod != null) {
@@ -583,32 +584,64 @@ public abstract class Auto_Util extends LinearOpMode {
     ___________________________________________________________________________________________________________________________________
      */
 
+    private void driveByPower(double power) {
+        lfmotor.setPower(power);
+        lbmotor.setPower(power);
+        rfmotor.setPower(power);
+        rbmotor.setPower(power);
+    }
+
     public void colorAlignment() {
-        Color.RGBToHSV(colorSensorLeft.red() * 8, colorSensorLeft.green() * 8, colorSensorLeft.blue() * 8, hsvValuesLeft);
-        Color.RGBToHSV(colorSensorRight.red() * 8, colorSensorRight.green() * 8, colorSensorRight.blue() * 8, hsvValuesRight);
+        boolean notOnLine = true;
+        lfmotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        lbmotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rfmotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rbmotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        while(notOnLine) {
+            Color.RGBToHSV(colorSensorLeft.red() * 8, colorSensorLeft.green() * 8, colorSensorLeft.blue() * 8, hsvValuesLeft);
+            Color.RGBToHSV(colorSensorRight.red() * 8, colorSensorRight.green() * 8, colorSensorRight.blue() * 8, hsvValuesRight);
 
-        telemetry.addLine("HueLR: " + hsvValuesLeft[0] + ", " + hsvValuesRight[0]);
-        telemetry.addLine("SaturLR: " + hsvValuesLeft[1] + ", " + hsvValuesRight[1]);
-        telemetry.addLine("ValLR: " + hsvValuesLeft[2] + ", " + hsvValuesRight[2]);
+            //telemetry.addLine("HueLR: " + hsvValuesLeft[0] + ", " + hsvValuesRight[0]);
+            //telemetry.addLine("SaturLR: " + hsvValuesLeft[1] + ", " + hsvValuesRight[1]);
+            telemetry.addLine("ValLR: " + hsvValuesLeft[2] + ", " + hsvValuesRight[2]);
 
-        if (hsvValuesLeft[2] >= 80 && hsvValuesRight[2] >= 80) {
-            lfmotor.setPower(0);
-            lbmotor.setPower(0);
-            rfmotor.setPower(0);
-            rbmotor.setPower(0);
-            telemetry.addLine("Yay on the line");
-            telemetry.update();
-            //break;
-        } else if (hsvValuesLeft[2] >= 120) {
-            turnLeft(.05);
-        } else if (hsvValuesRight[2] >= 120) {
-            turnRight(.05);
-        } else {
-            lfmotor.setPower(-.1);
-            lbmotor.setPower(-.1);
-            rfmotor.setPower(-.1);
-            rbmotor.setPower(-.1);
+            if (hsvValuesLeft[2] >= 80 && hsvValuesRight[2] >= 80) {
+                lfmotor.setPower(0);
+                lbmotor.setPower(0);
+                rfmotor.setPower(0);
+                rbmotor.setPower(0);
+                telemetry.addLine("Yay on the line");
+                telemetry.update();
+                notOnLine = false;
+            }
+            else if (hsvValuesLeft[2] >= 80) {
+                telemetry.addLine("White line on LEFT Side");
+                lfmotor.setPower(-.5);
+                lbmotor.setPower(-.5);
+                rfmotor.setPower(0);
+                rbmotor.setPower(0);
+            }
+            else if (hsvValuesRight[2] >= 80) {
+                telemetry.addLine("White line on RIGHT Side");
+                lfmotor.setPower(0);
+                lbmotor.setPower(0);
+                rfmotor.setPower(-.5);
+                rbmotor.setPower(-.5);
+            }
+            else {
+                telemetry.addLine("No White line detected");
+                lfmotor.setPower(-.2);
+                lbmotor.setPower(-.2);
+                rfmotor.setPower(-.2);
+                rbmotor.setPower(-.2);
+            }
         }
+        lfmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        lbmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rfmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rbmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        encoderDrive(DRIVE_SPEED, 2, 2, 10, 0);
 
         telemetry.update();
     }
