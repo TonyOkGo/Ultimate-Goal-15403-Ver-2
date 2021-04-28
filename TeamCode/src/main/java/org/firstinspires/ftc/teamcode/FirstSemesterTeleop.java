@@ -28,9 +28,12 @@
  */
 
 package org.firstinspires.ftc.teamcode;
+import android.graphics.Color;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -56,6 +59,8 @@ public class FirstSemesterTeleop extends LinearOpMode {
     static double slowamount = 1;
     static int togglex;
     static int toggley;
+    float hsvValuesLeft[] = {0F, 0F, 0F};
+    float hsvValuesRight[] = {0F, 0F, 0F};
     @Override
     public void runOpMode() {
         double elapTime = System.currentTimeMillis();
@@ -72,6 +77,13 @@ public class FirstSemesterTeleop extends LinearOpMode {
         double mPow = 0;
 
         double pastaPos = 0;
+
+        ColorSensor colorSensorLeft;
+        ColorSensor colorSensorRight;
+        colorSensorLeft = hardwareMap.get(ColorSensor.class, "colorLeft");
+        colorSensorRight = hardwareMap.get(ColorSensor.class, "colorRight");
+        colorSensorLeft.enableLed(true);
+        colorSensorRight.enableLed(true);
 
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Status", "Ready to run");    //
@@ -152,6 +164,49 @@ public class FirstSemesterTeleop extends LinearOpMode {
             robot.pastaServo2.setPower(-IntakeSpeed);
             robot.pastaMotor.setPower(IntakeSpeed);
             robot.intakeMotor.setPower(IntakeSpeed);
+
+            //Color ALignment
+            if(gamepad1.left_trigger > .5) {
+                boolean runColor = true;
+                while(runColor) {
+                    Color.RGBToHSV(colorSensorLeft.red() * 8, colorSensorLeft.green() * 8, colorSensorLeft.blue() * 8, hsvValuesLeft);
+                    Color.RGBToHSV(colorSensorRight.red() * 8, colorSensorRight.green() * 8, colorSensorRight.blue() * 8, hsvValuesRight);
+
+                    if (hsvValuesLeft[2] >= 80 && hsvValuesRight[2] >= 80) {
+                        robot.leftfrontDrive.setPower(-.3);
+                        robot.leftbackDrive.setPower(-.3);
+                        robot.rightfrontDrive.setPower(-.3);
+                        robot.rightbackDrive.setPower(-.3);
+                        sleep(200);
+                        robot.leftfrontDrive.setPower(0);
+                        robot.leftbackDrive.setPower(0);
+                        robot.rightfrontDrive.setPower(0);
+                        robot.rightbackDrive.setPower(0);
+                        telemetry.addLine("Yay on the line");
+                        runColor = false;
+                    } else if (hsvValuesLeft[2] >= 80) {
+                        telemetry.addLine("White line on LEFT Side");
+                        robot.leftfrontDrive.setPower(0);
+                        robot.leftbackDrive.setPower(0);
+                        robot.rightfrontDrive.setPower(-0.3);
+                        robot.rightbackDrive.setPower(-0.3);
+                    } else if (hsvValuesRight[2] >= 80) {
+                        telemetry.addLine("White line on RIGHT Side");
+                        robot.leftfrontDrive.setPower(-0.3);
+                        robot.leftbackDrive.setPower(-0.3);
+                        robot.rightfrontDrive.setPower(0);
+                        robot.rightbackDrive.setPower(0);
+                    } else {
+                        telemetry.addLine("No White line detected");
+                        robot.leftfrontDrive.setPower(.3);
+                        robot.leftbackDrive.setPower(.3);
+                        robot.rightfrontDrive.setPower(.3);
+                        robot.rightbackDrive.setPower(.3);
+                    }
+                    telemetry.update();
+                }
+            }
+
 
 
 

@@ -31,38 +31,44 @@ public class Auto_Vision extends Auto_Util {
         //Drive to the line and shoot the rings into the goal
         if(amountofrings == 0){
             encoderDrive(DRIVE_SPEED, -39,-39,10,0);
-            encoderDrive(DRIVE_SPEED, -1.6,1.6,10,0);
+            //encoderStrafe(DRIVE_SPEED, -3, -3, 10, 0);
+            colorAlignment();
+            //encoderDrive(DRIVE_SPEED, -1.6,1.6,10,0);
         }
         else{
             //drive around the ring pile
             encoderStrafe(STRAFE_SPEED, -14,-14,10,0);
             encoderDrive(DRIVE_SPEED, -30,-30,10,0);
-            encoderStrafe(STRAFE_SPEED, 12,12,10,0);
+            encoderStrafe(STRAFE_SPEED, 20,20,10,0);
             //encoderDrive(DRIVE_SPEED, -9,-9,10,0);
             encoderDrive(DRIVE_SPEED, -9, -9, 10, 0);
             sleep(500);
             colorAlignment();
-            //encoderDrive(DRIVE_SPEED, -2.8,2.8,10,0);
+            sleep(500);
+            //encoderStrafe(DRIVE_SPEED, 7,7,10,0);
         }
 
-        smartShoot(7);
+        //smartShoot(9);
         if(amountofrings == 0){
+            smartShoot(10);
             //strafe left to be lined up with the first square
             //drop the arm motor
             //open the arm servo
             //strafe out of the way of the wobble goal
             //drive back onto the line to park
             encoderStrafe(DRIVE_SPEED,30,30,10,0);
+            encoderDrive(DRIVE_SPEED, 5, 5, 10, 0);
             utilmotor4.setPower(0.6);
             sleep(600);
             utilmotor4.setPower(0);
             servo1.setPosition(10);
-            encoderDrive(10,10,10,10,0);
-            encoderStrafe(DRIVE_SPEED,-25,-25,10,0);
-            encoderDrive(DRIVE_SPEED,-20,-20,10,0);
+            //encoderDrive(6,6,10,10,0);
+            encoderStrafe(DRIVE_SPEED,-32,-32,10,0);
+            encoderDrive(DRIVE_SPEED,-15,-15,10,0);
 
         }
         if(amountofrings ==1){
+            smartShoot(10);
             //strafe a tiny bit to line up with the second square
             //drive forward to be lined up with that square
             //drop the arm motor
@@ -77,18 +83,20 @@ public class Auto_Vision extends Auto_Util {
             encoderDrive(DRIVE_SPEED,15,15,10,0);
         }
         if(amountofrings == 2){
+            smartShoot(9);
             //strafe left to be lined up with the third square
             //drive forward to be lined up with that square
             //drop the arm motor
             //open the arm servo
             //drive backwards
-            encoderStrafe(DRIVE_SPEED,33,33,10,0);
+            encoderStrafe(DRIVE_SPEED,28,28,10,0);
             encoderDrive(DRIVE_SPEED,-48,-48,10,0);
+            encoderDrive(DRIVE_SPEED, -5, 5, 10, 0);
             utilmotor4.setPower(0.6);
             sleep(600);
             utilmotor4.setPower(0);
             servo1.setPosition(10);
-            encoderDrive(DRIVE_SPEED,25,25,10,0);
+            encoderDrive(DRIVE_SPEED,45,45,10,0);
 
         }
 

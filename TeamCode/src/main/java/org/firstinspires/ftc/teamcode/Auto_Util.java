@@ -41,7 +41,7 @@ public abstract class Auto_Util extends LinearOpMode {
     static final double ENCODER_COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * 3.14159);
     static final double DRIVE_SPEED = 0.1;
     static final double STRAFE_SPEED = 0.4;
-    static final double TARGET_SHOOTER_SPEED = 2;
+    static final double TARGET_SHOOTER_SPEED = 1.975;
     //Drive motors
     DcMotor rfmotor, rbmotor, lfmotor, lbmotor;
     //Utility motors
@@ -413,7 +413,7 @@ public abstract class Auto_Util extends LinearOpMode {
         double velocityoffset;
         runtime.reset();
         while (runtime.seconds() < time) {
-            if (runtime.seconds() > 4) {
+            if (runtime.seconds() > 5.5) {
                 utilmotor1.setPower(-1);
                 utilmotor2.setPower(-1);
                 crservo1.setPower(1);
@@ -616,17 +616,17 @@ public abstract class Auto_Util extends LinearOpMode {
             }
             else if (hsvValuesLeft[2] >= 80) {
                 telemetry.addLine("White line on LEFT Side");
-                lfmotor.setPower(-.5);
-                lbmotor.setPower(-.5);
-                rfmotor.setPower(0);
-                rbmotor.setPower(0);
+                lfmotor.setPower(0);
+                lbmotor.setPower(0);
+                rfmotor.setPower(.3);
+                rbmotor.setPower(.3);
             }
             else if (hsvValuesRight[2] >= 80) {
                 telemetry.addLine("White line on RIGHT Side");
-                lfmotor.setPower(0);
-                lbmotor.setPower(0);
-                rfmotor.setPower(-.5);
-                rbmotor.setPower(-.5);
+                lfmotor.setPower(.3);
+                lbmotor.setPower(.3);
+                rfmotor.setPower(0);
+                rbmotor.setPower(0);
             }
             else {
                 telemetry.addLine("No White line detected");
@@ -636,12 +636,22 @@ public abstract class Auto_Util extends LinearOpMode {
                 rbmotor.setPower(-.2);
             }
         }
+        lfmotor.setPower(0);
+        lbmotor.setPower(0);
+        rfmotor.setPower(.2);
+        rbmotor.setPower(.2);
+        sleep(500);
+        lfmotor.setPower(0);
+        lbmotor.setPower(0);
+        rfmotor.setPower(0);
+        rbmotor.setPower(0);
+
         lfmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         lbmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rfmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rbmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        encoderDrive(DRIVE_SPEED, 2, 2, 10, 0);
+        encoderDrive(DRIVE_SPEED, 1, 1, 10, 0);
 
         telemetry.update();
     }
